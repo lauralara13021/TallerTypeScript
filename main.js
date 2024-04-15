@@ -13,12 +13,15 @@ function fillSeriesTable() {
         row.appendChild(idCell);
         const nameCell = document.createElement('td');
         const link = document.createElement('a');
-        link.href = `#serie-${serie.id}`; 
+        link.href = '#'; // Enlace vacío por ahora
         link.textContent = serie.name;
-        link.addEventListener('click', () => showSerieDetails(serie.id)); 
-        nameCell.appendChild(link);
+        link.addEventListener('click', (event) => {
+            event.preventDefault(); // Evitar el comportamiento predeterminado del enlace
+            showSerieDetails(serie.id);
+        });
+        nameCell.appendChild(link); // Agregar el enlace al texto
         row.appendChild(nameCell);
-        
+
         const channelCell = document.createElement('td');
         channelCell.textContent = serie.channel;
         row.appendChild(channelCell);
@@ -36,6 +39,8 @@ function fillSeriesTable() {
     seasonsAverageText.textContent = `Seasons average: ${seasonAverage}`;
 }
 
+
+
 function showSerieDetails(serieId) {
     const selectedSerieId = serieId
     const selectedSerie = series.find(serie => serie.id === selectedSerieId);
@@ -47,10 +52,12 @@ function showSerieDetails(serieId) {
                 <div class="card-body">
                     <h5 class="card-title">${selectedSerie.name}</h5>
                     <p class="card-text">${selectedSerie.description}</p>
+                    <a href="${selectedSerie.link}" target="_blank" class="card-link">${selectedSerie.link}</a>
                 </div>
             </div>
         `;
     }
 }
+
 
 document.addEventListener('DOMContentLoaded', fillSeriesTable);
